@@ -31,3 +31,9 @@ export const loginRequest = new EasyJWTRequest({
   method: 'POST',
   needsAuth: false
 })
+
+export const logoutRequest = new EasyJWTRequest({
+  url: getUrl('/api/auth/logout'),
+  method: 'POST',
+  needsAuth: true
+})
