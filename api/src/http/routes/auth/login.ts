@@ -18,7 +18,7 @@ router.post('/', async function (req, res, next) {
     }
 
     const auth = container.make<EasyJWTAuth>('auth')
-    const result = await auth.login(form.value.username, form.value.password)
+    const result = await auth.login(form.value.email, form.value.password)
 
     res.json({
       user: result.user.toJSON(),
