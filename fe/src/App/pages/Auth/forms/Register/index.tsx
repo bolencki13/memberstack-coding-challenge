@@ -2,6 +2,8 @@ import React from 'react'
 import { Row, Form, Col, Alert, Button } from 'react-bootstrap'
 import { Formik } from 'formik'
 import * as Yup from 'yup'
+import { useDispatch } from 'react-redux'
+import auth, { RegisterProcess } from '../../../../../redux/auth'
 
 const validationSchema = Yup.object().shape({
   fullName: Yup.string().required('Required'),
@@ -22,6 +24,7 @@ type RegisterFormProps = {
 
 export default function RegisterForm (props: RegisterFormProps) {
   const [error, setError] = React.useState('')
+  const dispatch: any = useDispatch()
 
   return (
     <Formik
@@ -31,7 +34,7 @@ export default function RegisterForm (props: RegisterFormProps) {
         try {
           setError('')
 
-          // TODO: submit to server
+          await dispatch(auth.execute(RegisterProcess, values))
 
           resetForm({})
         } catch (e) {
@@ -42,7 +45,7 @@ export default function RegisterForm (props: RegisterFormProps) {
     >
       {(formProps) => {
         return (
-          <Form onSubmit={formProps.handleSubmit} className="text-left">
+          <Form onSubmit={formProps.handleSubmit}>
             <Row className="p-3">
               <Col xs={12}>
                 <h1>Register</h1>
