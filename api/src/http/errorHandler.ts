@@ -1,5 +1,8 @@
 import { Request, Response } from 'express'
-import LeasilyError from '../errors/MemberStackError'
+import MemberStackError from '../errors/MemberStackError'
+import { errors } from 'ts-easy-jwt-auth'
+import UnauthorizedError from '../errors/UnauthorizedError'
+import ForbiddenError from '../errors/ForbiddenError'
 
 export default function errorHandler(
   err: Error,
@@ -7,7 +10,21 @@ export default function errorHandler(
   res: Response,
   __: Function
 ) {
-  if (err instanceof LeasilyError) {
+  if (
+    err instanceof errors.UnauthorizedError ||
+    err instanceof errors.InvalidRoleError
+  ) {
+    err = new UnauthorizedError()
+  }
+
+  if (
+    err instanceof errors.ForbiddenError ||
+    err instanceof errors.DuplicateUserError
+  ) {
+    err = new ForbiddenError()
+  }
+
+  if (err instanceof MemberStackError) {
     return res.status(err.statusCode).json({
       statusCode: err.statusCode,
       message: err.message,
