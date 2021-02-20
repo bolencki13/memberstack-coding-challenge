@@ -2,6 +2,8 @@ import React from 'react'
 import { Row, Form, Col, Alert, Button } from 'react-bootstrap'
 import { Formik } from 'formik'
 import * as Yup from 'yup'
+import { useDispatch } from 'react-redux'
+import auth, { LoginProcess } from '../../../../../redux/auth'
 
 const validationSchema = Yup.object().shape({
   email: Yup.string().email('Invalid email').required('Required'),
@@ -20,6 +22,7 @@ type LoginFormProps = {
 
 export default function LoginForm (props: LoginFormProps) {
   const [error, setError] = React.useState('')
+  const dispatch: any = useDispatch()
 
   return (
     <Formik
@@ -29,7 +32,7 @@ export default function LoginForm (props: LoginFormProps) {
         try {
           setError('')
 
-          // TODO: submit to server
+          await dispatch(auth.execute(LoginProcess, values))
 
           resetForm({})
         } catch (e) {
