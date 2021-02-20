@@ -1,8 +1,9 @@
 import { ProcessGroupFactory, RequestName } from 'ts-easy-jwt-client/dist/redux-process'
 import { meRequest, loginRequest, registerRequest } from '../requests'
 import networker from '../networker'
+import { RootState } from '../store'
 
-const processGroupFactory = new ProcessGroupFactory({
+const processGroupFactory = new ProcessGroupFactory<RootState>({
   requests: {
     [RequestName.CURRENT_USER]: meRequest,
     [RequestName.LOGIN]: loginRequest,
