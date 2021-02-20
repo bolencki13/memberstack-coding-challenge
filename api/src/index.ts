@@ -19,3 +19,11 @@ const uri = Database.parseUri({
   name
 })
 const db = new Database(uri)
+
+import { app } from './http/server' // intentionally imported here due to service container restraints
+
+const port = process.env.PORT || 8000
+app.listen({ port }, async () => {
+  await db.connect()
+  console.log(`🚀 Server ready at http://localhost:${port}`)
+})

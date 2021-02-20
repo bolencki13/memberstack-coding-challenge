@@ -2,7 +2,7 @@ import { Router } from 'express'
 import container from '../../../container'
 import { EasyJWTAuth } from 'ts-easy-jwt-auth'
 import { IUserModel } from '../../../models/User'
-import Joi from 'joi'
+import * as Joi from 'joi'
 
 const router = Router()
 
