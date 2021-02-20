@@ -8,10 +8,8 @@ export enum UserRoles {
 export interface IUser extends MemberStackDocument {
   fullName: string
   email: string
-  password: {
-    hash: string
-    salt: string
-  }
+  hash: string
+  role: UserRoles
 }
 
 export interface IUserModel extends MemberStackModel<IUser> {}
@@ -33,15 +31,9 @@ const UserSchema = new Schema<IUser>(
       enum: [Object.values(UserRoles)],
       default: UserRoles.USER
     },
-    password: {
-      hash: {
-        type: String,
-        required: true
-      },
-      salt: {
-        type: String,
-        required: true
-      }
+    hash: {
+      type: String,
+      required: true
     }
   },
   {
