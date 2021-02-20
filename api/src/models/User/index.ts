@@ -37,7 +37,12 @@ const UserSchema = new Schema<IUser>(
     }
   },
   {
-    timestamps: true
+    timestamps: true,
+    toJSON: {
+      transform: (_, ret) => {
+        delete ret.hash
+      }
+    }
   }
 )
 
