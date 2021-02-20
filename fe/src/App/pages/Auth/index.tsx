@@ -2,6 +2,7 @@ import React from 'react'
 import { Row, Col } from 'react-bootstrap'
 import RegisterForm from './forms/Register'
 import LoginForm from './forms/Login'
+import { useHistory } from 'react-router-dom'
 
 enum FormType {
   Register,
@@ -10,6 +11,11 @@ enum FormType {
 
 export default function AuthPage() {
   const [formType, setFormType] = React.useState(FormType.Register)
+  const history = useHistory()
+
+  const onSuccess = () => {
+    history.push('/dashboard')
+  }
 
   return (
     <Row className="justify-content-center m-3">
@@ -17,9 +23,9 @@ export default function AuthPage() {
         {
           formType === FormType.Register
           ? (
-            <RegisterForm onRequestLogin={() => setFormType(FormType.Login)} />
+            <RegisterForm onSuccess={onSuccess} onRequestLogin={() => setFormType(FormType.Login)} />
           ): (
-            <LoginForm onRequestRegister={() => setFormType(FormType.Register)} />
+            <LoginForm onSuccess={onSuccess} onRequestRegister={() => setFormType(FormType.Register)} />
           )
         }
       </Col>

@@ -18,6 +18,7 @@ const initialValues = {
 
 type LoginFormProps = {
   onRequestRegister: () => void
+  onSuccess: () => void
 }
 
 export default function LoginForm (props: LoginFormProps) {
@@ -35,6 +36,7 @@ export default function LoginForm (props: LoginFormProps) {
           await dispatch(auth.execute(LoginProcess, values))
 
           resetForm({})
+          props.onSuccess()
         } catch (e) {
           setError(e.message)
         }

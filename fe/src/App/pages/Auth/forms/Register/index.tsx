@@ -20,6 +20,7 @@ const initialValues = {
 
 type RegisterFormProps = {
   onRequestLogin: () => void
+  onSuccess: () => void
 }
 
 export default function RegisterForm (props: RegisterFormProps) {
@@ -37,6 +38,7 @@ export default function RegisterForm (props: RegisterFormProps) {
           await dispatch(auth.execute(RegisterProcess, values))
 
           resetForm({})
+          props.onSuccess()
         } catch (e) {
           setError(e.message)
         }
