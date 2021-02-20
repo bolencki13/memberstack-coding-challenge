@@ -1,6 +1,7 @@
 import React from 'react'
 import { Row, Col } from 'react-bootstrap'
 import RegisterForm from './forms/Register'
+import LoginForm from './forms/Login'
 
 enum FormType {
   Register,
@@ -18,7 +19,7 @@ export default function AuthPage() {
           ? (
             <RegisterForm onRequestLogin={() => setFormType(FormType.Login)} />
           ): (
-            <p>Login</p>
+            <LoginForm onRequestRegister={() => setFormType(FormType.Register)} />
           )
         }
       </Col>
