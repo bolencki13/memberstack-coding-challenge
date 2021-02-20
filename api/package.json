@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "@halliganjs/service-container": "^1.1.0",
+    "mongoose": "^5.11.17",
     "typescript": "^4.1.3"
   },
   "devDependencies": {
