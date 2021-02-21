@@ -19,7 +19,7 @@ router.post('/', async function (req, res, next) {
       throw form.error
     }
 
-    const auth = container.make<EasyJWTAuth>('auth')
+    const auth = container.make<EasyJWTAuth>(EasyJWTAuth)
     const result = await auth.register(form.value.username, form.value.password)
 
     const User = container.make('models').User as IUserModel

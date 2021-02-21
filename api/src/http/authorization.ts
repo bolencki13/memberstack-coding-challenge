@@ -20,7 +20,7 @@ export default async function authorization(
     }
 
     const token = aryAuth[1]
-    const auth = container.make<EasyJWTAuth>('auth')
+    const auth = container.make<EasyJWTAuth>(EasyJWTAuth)
 
     const result = await auth.validate(token)
 

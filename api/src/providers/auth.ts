@@ -4,7 +4,7 @@ import { IUserModel, UserRoles } from '../models/User'
 import UnauthorizedError from '../errors/UnauthorizedError'
 
 export default function (container: ContainerInterface) {
-  container.singleton('auth', function () {
+  container.singleton(EasyJWTAuth, function () {
     let accessTokenSecret = process.env.ACCESS_TOKEN_SECRET
     if (!accessTokenSecret) {
       throw new Error('ACCESS_TOKEN_SECRET has not been set in the env')

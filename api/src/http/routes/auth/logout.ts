@@ -6,7 +6,7 @@ const router = Router()
 
 router.post('/', async function (_, res, next) {
   try {
-    const auth = container.make<EasyJWTAuth>('auth')
+    const auth = container.make<EasyJWTAuth>(EasyJWTAuth)
     auth.logout(res.locals.tokens.access)
 
     res.json({
