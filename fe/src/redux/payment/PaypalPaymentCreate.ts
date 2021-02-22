@@ -6,7 +6,8 @@ import { paymentPaypalCreateRequest } from '../requests'
 import networker from '../networker'
 
 type Form = {
-  token: string
+  id: string
+  createdAt: string
 }
 
 export default class PaypalPaymentCreateProcess extends ReduxProcess<Form, PaymentJSON, PaymentState, RootState> {

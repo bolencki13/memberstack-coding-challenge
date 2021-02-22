@@ -2,7 +2,7 @@ import React from 'react'
 import { Row, Col, Alert } from 'react-bootstrap'
 import { PayPalButtons } from '@paypal/react-paypal-js'
 import { PlanJSON } from '../../../../../../types'
-// import payment, { StripePaymentCreateProcess } from '../../../../../../redux/payment'
+import payment, { PaypalPaymentCreateProcess } from '../../../../../../redux/payment'
 import { useDispatch } from 'react-redux'
 
 type PaypalFormProps = {
@@ -27,11 +27,13 @@ export default function PaypalForm (props: PaypalFormProps) {
               }]
             })
           }}
-          onApprove={async (data, actions) => {
+          onApprove={async (_, actions) => {
             try {
-              console.log(data)
               const details = await actions.order.capture()
-              console.log(details)
+              await dispatch(payment.execute(PaypalPaymentCreateProcess, {
+                id: details.id,
+                createdAt: details.create_time
+              }))
             } catch (e) {
               setError(e.message)
             }
