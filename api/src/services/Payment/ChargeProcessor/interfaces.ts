@@ -1,10 +1,8 @@
-export enum ChargeProcessorFacilitator {
-  STRIPE = 'stripe'
-}
+import { ChargeFacilitator } from '../../../models/Payment'
 
 export type ChargeProcessorResult = {
   id: string
-  facilitator: ChargeProcessorFacilitator
+  facilitator: ChargeFacilitator
   description: string
   amount: number
   createdAt: Date

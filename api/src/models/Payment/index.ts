@@ -3,7 +3,8 @@ import { MemberStackModel, MemberStackDocument } from '../interfaces'
 import { IUser, modelName as userModelName } from '../User'
 
 export enum ChargeFacilitator {
-  STRIPE = 'stripe'
+  STRIPE = 'stripe',
+  PAYPAL = 'paypal'
 }
 
 export interface IPayment extends MemberStackDocument {

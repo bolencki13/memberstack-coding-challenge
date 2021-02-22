@@ -1,11 +1,11 @@
 import {
   IChargeProcessor,
   ChargeProcessorResult,
-  ChargeProcessorChargeOptions,
-  ChargeProcessorFacilitator
+  ChargeProcessorChargeOptions
 } from './interfaces'
 import container from '../../../container'
 import Stripe from 'stripe'
+import { ChargeFacilitator } from '../../../models/Payment'
 
 export type StripeChargeProcessorOptions = {
   source: string // card token
@@ -31,7 +31,7 @@ export default class StripeChargeProcessor implements IChargeProcessor {
       description: charge.description || options.description,
       amount: charge.amount / 100,
       createdAt: new Date(charge.created),
-      facilitator: ChargeProcessorFacilitator.STRIPE
+      facilitator: ChargeFacilitator.STRIPE
     }
   }
 }
