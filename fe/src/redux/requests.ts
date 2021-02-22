@@ -37,3 +37,8 @@ export const logoutRequest = new EasyJWTRequest({
   method: 'POST',
   needsAuth: true
 })
+
+export const planRetrieveRequest = new EasyJWTRequest({
+  url: getUrl('/api/plan'),
+  method: 'GET'
+})

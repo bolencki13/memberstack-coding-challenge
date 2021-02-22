@@ -5,3 +5,14 @@ export type UserJSON = {
   createdAt: string
   updatedAt: string
 }
+
+export type PlanJSON = {
+  id: string
+  name: string
+  description: string
+  paymentOptions:{
+    type: string,
+    amount: number,
+    currency: string
+  }[]
+}
