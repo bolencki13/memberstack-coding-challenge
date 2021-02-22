@@ -3,6 +3,7 @@ import container from '../../../../container'
 import Payment from '../../../../services/Payment'
 import StripeChargeProcessor from '../../../../services/Payment/ChargeProcessor/StripeChargeProcessor'
 import * as Joi from 'joi'
+import plan from '../../../../plan'
 
 const router = Router()
 
@@ -26,8 +27,8 @@ router.post('/', async function (req, res, next) {
       {
         user: res.locals.user,
         charge: {
-          amount: 500,
-          description: 'Stripe charge for $500'
+          amount: plan.paymentOptions[0].amount,
+          description: `${plan.name} - ${plan.description}`
         }
       },
       processor

@@ -18,8 +18,8 @@ export default class Payment {
     const Payment = container.make('models').Payment as IPaymentModel
     const payment = await Payment.create({
       facilitator: result.facilitator,
-      description: result.description,
-      amount: result.amount,
+      description: options.charge.description,
+      amount: options.charge.amount,
       chargedAt: result.createdAt,
       facilitatorId: result.id,
       user: options.user
