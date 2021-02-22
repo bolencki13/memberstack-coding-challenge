@@ -1,14 +1,23 @@
 import React from 'react'
 import { Row, Col, ButtonGroup, Button } from 'react-bootstrap'
 import { Elements } from '@stripe/react-stripe-js'
+import { PayPalScriptProvider } from '@paypal/react-paypal-js'
 import { loadStripe } from '@stripe/stripe-js'
 import StripeForm from './StripeForm'
+import PaypalForm from './PaypalForm'
 import { PlanJSON, ChargeFacilitator } from '../../../../../types'
 
-const stripeKey = process.env.REACT_APP_STRIPE_PUBLIC_KEY
-if (!stripeKey) {
+const _stripeKey = process.env.REACT_APP_STRIPE_PUBLIC_KEY
+if (!_stripeKey) {
   throw new Error("REACT_APP_STRIPE_PUBLIC_KEY has not been set in env.")
 }
+const stripeKey = _stripeKey // ts was confusing this as still undefined in the funcitonal component. Re-assigning the variable fixed the ts error
+
+const _paypalKey = process.env.REACT_APP_PAYPAL_PUBLIC_KEY
+if (!_paypalKey) {
+  throw new Error('REACT_APP_PAYPAL_PUBLIC_KEY has not been set in env.')
+}
+const paypalKey = _paypalKey // ts was confusing this as still undefined in the funcitonal component. Re-assigning the variable fixed the ts error
 
 const stripePromise = loadStripe(stripeKey)
 
@@ -44,6 +53,16 @@ export default function CheckoutForm (props: CheckoutFormProps) {
                   <Elements stripe={stripePromise}>
                     <StripeForm/>
                   </Elements>
+                )
+              case ChargeFacilitator.PAYPAL:
+                return (
+                  <PayPalScriptProvider
+                    options={{
+                      "client-id": paypalKey
+                    }}
+                  >
+                    <PaypalForm plan={props.plan} />
+                  </PayPalScriptProvider>
                 )
             }
           })()

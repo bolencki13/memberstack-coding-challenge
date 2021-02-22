@@ -1,5 +1,6 @@
 export enum ChargeFacilitator {
-  STRIPE = 'stripe'
+  STRIPE = 'stripe',
+  PAYPAL = 'paypal'
 }
 
 export type UserJSON = {

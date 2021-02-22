@@ -40,11 +40,18 @@ export const logoutRequest = new EasyJWTRequest({
 
 export const planRetrieveRequest = new EasyJWTRequest({
   url: getUrl('/api/plan'),
-  method: 'GET'
+  method: 'GET',
+  needsAuth: true
 })
 
-export const paymentStripCreateRequest = new EasyJWTRequest({
+export const paymentStripeCreateRequest = new EasyJWTRequest({
   url: getUrl('/api/payments/stripe/charge'),
+  method: 'POST',
+  needsAuth: true
+})
+
+export const paymentPaypalCreateRequest = new EasyJWTRequest({
+  url: getUrl('/api/payments/paypal/charge'),
   method: 'POST',
   needsAuth: true
 })
