@@ -31,7 +31,7 @@ npm run develop
 ```
 
 ## Example
-An example app can be found running at [https://payment-example.olencki.com/](https://payment-example.olencki.com/).
+An example app can be found running at [http://payment-example.olencki.com:3000](http://payment-example.olencki.com:3000).
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
