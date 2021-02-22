@@ -1,0 +1,17 @@
+# Pull in the latest image for node
+FROM node:12.16.1
+
+# Define the working directory
+WORKDIR /usr/app
+
+# Copy package and package lock
+COPY package*.json ./
+
+# Install node dependencies
+RUN npm install
+
+# Put all files in the current directory into the workdir of the image
+COPY . .
+
+# The command the container will run
+CMD ["npm", "start"]

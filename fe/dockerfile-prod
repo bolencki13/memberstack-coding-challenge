@@ -1,0 +1,27 @@
+# Pull in the latest image for node
+FROM node:12.16.1 as build-deps
+
+# Define the working directory
+WORKDIR /usr/app
+
+# Copy package and package lock
+COPY package*.json ./
+
+# Install node dependencies
+RUN npm install
+
+# Put all files in the current directory into the workdir of the image
+COPY . .
+
+# Build production version of app
+RUN npm run build
+
+
+# Stage 2 - the production environment
+FROM nginx:1.12-alpine
+
+COPY --from=build-deps /usr/app/build /usr/share/nginx/html
+
+COPY config/nginx/default.conf /etc/nginx/conf.d/default.conf
+
+CMD ["nginx", "-g", "daemon off;"]
