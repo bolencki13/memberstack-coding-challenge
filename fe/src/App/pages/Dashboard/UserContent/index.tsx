@@ -7,8 +7,10 @@ import auth, { LogoutProcess } from '../../../../redux/auth'
 import { useHistory } from 'react-router-dom'
 import moment from 'moment'
 import plan, { PlanRetrieveProcess } from '../../../../redux/plan'
+import payment, { PaymentAllProcess } from '../../../../redux/payment'
 import { RootState } from '../../../../redux/store'
 import LoadingView from '../LoadingView'
+import PaymentHistory from './PaymentHistory'
 
 type UserContent = {
   user: UserJSON
@@ -22,20 +24,28 @@ export default function UserContent (props: UserContent) {
     try {
       await dispatch(plan.execute(PlanRetrieveProcess))
     } catch (e) {
-      window.alert('Failed to get plan from server.')
+      console.error(e)
     }
-  }, [dispatch])
+  }, [])
+  const getPayment = React.useCallback(async () => {
+    try {
+      await dispatch(payment.execute(PaymentAllProcess))
+    } catch (e) {
+      console.error(e)
+    }
+  }, [])
 
-  const { defaultPlan, payment } = useSelector((state: RootState) => {
+  const { defaultPlan, pastPayment } = useSelector((state: RootState) => {
     return {
       defaultPlan: state.plan.default,
-      payment: null
+      pastPayment: state.payment
     }
   })
 
   React.useEffect(() => {
     getPlan()
-  })
+    getPayment()
+  }, [])
 
   return (
     <Row className="p-3">
@@ -68,9 +78,9 @@ export default function UserContent (props: UserContent) {
       <Col xs={12}>
         {
           (() => {
-            if (payment) {
+            if (pastPayment) {
               return (
-                <p>payment</p>
+                <PaymentHistory payment={pastPayment} />
               )
             } else if (defaultPlan) {
               return (

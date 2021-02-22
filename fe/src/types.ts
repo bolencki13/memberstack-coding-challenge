@@ -1,3 +1,7 @@
+export enum ChargeFacilitator {
+  STRIPE = 'stripe'
+}
+
 export type UserJSON = {
   _id: string
   fullName: string
@@ -15,4 +19,15 @@ export type PlanJSON = {
     amount: number,
     currency: string
   }[]
+}
+
+export type PaymentJSON = {
+  _id: string
+  facilitator: ChargeFacilitator
+  description: string
+  amount: number
+  chargedAt: Date
+  user: string
+  createdAt: string
+  updatedAt: string
 }

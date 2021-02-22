@@ -1,10 +1,13 @@
 import React from 'react'
 import { Row, Col, Form, Button, Alert } from 'react-bootstrap'
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js'
+import payment, { StripePaymentCreateProcess } from '../../../../../../redux/payment'
+import { useDispatch } from 'react-redux'
 
 export default function StripeForm () {
   const stripe = useStripe()
   const elements = useElements()
+  const dispatch: any = useDispatch()
   const [error, setError] = React.useState('')
   const [isSubmitting, setIsSubmitting] = React.useState(false)
 
@@ -23,24 +26,21 @@ export default function StripeForm () {
           throw new Error('Stripe did not return a card element.')
         }
 
-        const {error, paymentMethod} = await stripe.createPaymentMethod({
-          type: 'card',
-          card: cardElement,
-        })
+        const {error, token} = await stripe.createToken(cardElement)
         if (error) {
           throw error
         }
-        if (!paymentMethod) {
+        if (!token) {
           throw new Error('Stripe failed to return an error or a payment method.')
         }
 
-        console.log(paymentMethod)
-        // TODO: submit to server
+        await dispatch(payment.execute(StripePaymentCreateProcess, {
+          token: token.id
+        }))
       } catch (e) {
         setError(e.message)
+        setIsSubmitting(false)
       }
-
-      setIsSubmitting(false)
     }}>
       <Row noGutters className="mt-3 mb-3">
         <Col className="border rounded pl-3 pr-3 pt-2 pb-2 mb-3">

@@ -3,7 +3,7 @@ import { Row, Col, ButtonGroup, Button } from 'react-bootstrap'
 import { Elements } from '@stripe/react-stripe-js'
 import { loadStripe } from '@stripe/stripe-js'
 import StripeForm from './StripeForm'
-import { PlanJSON } from '../../../../../types'
+import { PlanJSON, ChargeFacilitator } from '../../../../../types'
 
 const stripeKey = process.env.REACT_APP_STRIPE_PUBLIC_KEY
 if (!stripeKey) {
@@ -12,17 +12,12 @@ if (!stripeKey) {
 
 const stripePromise = loadStripe(stripeKey)
 
-enum PaymentFacilitator {
-  STRIPE = 'Stripe',
-  PAYPAL = 'PayPal'
-}
-
 type CheckoutFormProps = {
   plan: PlanJSON
 }
 
 export default function CheckoutForm (props: CheckoutFormProps) {
-  const [targetFacilitator, setTargetFacilitator] = React.useState(PaymentFacilitator.STRIPE)
+  const [targetFacilitator, setTargetFacilitator] = React.useState(ChargeFacilitator.STRIPE)
   return (
     <Row>
       <Col xs={12}>
@@ -32,7 +27,7 @@ export default function CheckoutForm (props: CheckoutFormProps) {
       <Col xs={12}>
         <ButtonGroup aria-label="payment-facilitator-picker" className="w-100">
           {
-            Object.values(PaymentFacilitator).map((facilitator) => {
+            Object.values(ChargeFacilitator).map((facilitator) => {
               return (
                 <Button key={facilitator} variant={facilitator === targetFacilitator ? 'secondary' : 'outline-secondary'} onClick={() => setTargetFacilitator(facilitator)}>{facilitator}</Button>
               )
@@ -44,7 +39,7 @@ export default function CheckoutForm (props: CheckoutFormProps) {
         {
           (() => {
             switch (targetFacilitator) {
-              case PaymentFacilitator.STRIPE:
+              case ChargeFacilitator.STRIPE:
                 return (
                   <Elements stripe={stripePromise}>
                     <StripeForm/>

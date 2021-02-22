@@ -42,3 +42,15 @@ export const planRetrieveRequest = new EasyJWTRequest({
   url: getUrl('/api/plan'),
   method: 'GET'
 })
+
+export const paymentStripCreateRequest = new EasyJWTRequest({
+  url: getUrl('/api/payments/stripe/charge'),
+  method: 'POST',
+  needsAuth: true
+})
+
+export const paymentAllRequest = new EasyJWTRequest({
+  url: getUrl('/api/payments'),
+  method: 'GET',
+  needsAuth: true
+})
